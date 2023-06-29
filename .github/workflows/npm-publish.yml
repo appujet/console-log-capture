@@ -61,7 +61,7 @@ jobs:
           rm -f package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Publish package
         run: npm publish
