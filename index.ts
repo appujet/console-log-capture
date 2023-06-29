@@ -1,7 +1,7 @@
 import fs from 'fs';
-import type { Options } from './index.d';
+import { Options } from './types';
 
-export default class ConsoleLogCapture {
+export class ConsoleLogCapture {
   private fileName = '.console.log';
   private location = './';
   private originalLog!: (...data: any[]) => void;
