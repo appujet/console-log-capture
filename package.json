@@ -4,7 +4,6 @@
   "description": "A library for capturing console logs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build"
