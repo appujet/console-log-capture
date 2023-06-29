@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { Options } from './types';
+import type { Options } from './index.d';
 
 export default class ConsoleLogCapture {
   private fileName = '.console.log';
@@ -36,7 +36,7 @@ export default class ConsoleLogCapture {
       this.createLogFile();
     } else {
       const timeFormat = new Date();
-      const time = timeFormat.getFullYear() + '-' + (timeFormat.getMonth() + 1) + '-' + timeFormat.getDate() + '_' + timeFormat.getHours() + ':' + timeFormat.getMinutes();
+      const time = timeFormat.getFullYear() + '-' + (timeFormat.getMonth() + 1) + '-' + timeFormat.getDate() + '-' + timeFormat.getHours() + ':' + timeFormat.getMinutes();
 
       fs.appendFileSync(this.location + this.fileName, time + ' ' + logText + '\n');
     }

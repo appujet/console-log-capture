@@ -55,10 +55,11 @@ jobs:
       - name: Clear npm cache
         run: npm cache clean --force
 
-      - name: Delete node_modules and package-lock.json
+      - name: Delete node_modules and package-lock.json and dist
         run: |
           rm -rf node_modules
           rm -f package-lock.json
+          rm -rf dist
 
       - name: Install dependencies
         run: npm install

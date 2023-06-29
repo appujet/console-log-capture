@@ -9,7 +9,11 @@
     },
     "include": [
         "index.ts",
-        "types.d.ts"
+        "index.d.ts"
+    ],
+    "files": [
+        "index.ts",
+        "index.d.ts"
     ],
     "exclude": [
         "node_modules"

@@ -24,13 +24,14 @@ console.log('Hello World! Again!');
 console.log('Hello World! Again! Again!');
 console.log('Hello World! Again! Again! Again!');
 
+// get all logs
 console.log(consoleLogCapture.getCapturedLogs());
 consoleLogCapture.stop();
 
-// output
+// with date range
 const timeFormat = new Date();
-const start = "2023-6-30_3:00";
-const end = timeFormat.getFullYear() + '-' + (timeFormat.getMonth() + 1) + '-' + timeFormat.getDate() + '_' + timeFormat.getHours() + ':' + timeFormat.getMinutes();
+const start = "2023-6-30-3:00"; // date format: yyyy-mm-dd-hh:mm
+const end = timeFormat.getFullYear() + '-' + (timeFormat.getMonth() + 1) + '-' + timeFormat.getDate() + '-' + timeFormat.getHours() + ':' + timeFormat.getMinutes();
 console.log(consoleLogCapture.getCapturedLogs(start, end));
 
 ```
