@@ -27,6 +27,11 @@ console.log('Hello World! Again! Again! Again!');
 console.log(consoleLogCapture.getCapturedLogs());
 consoleLogCapture.stop();
 
+// output
+const timeFormat = new Date();
+const start = "2023-6-30_3:00";
+const end = timeFormat.getFullYear() + '-' + (timeFormat.getMonth() + 1) + '-' + timeFormat.getDate() + '_' + timeFormat.getHours() + ':' + timeFormat.getMinutes();
+console.log(consoleLogCapture.getCapturedLogs(start, end));
 
 ```
 

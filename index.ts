@@ -18,7 +18,6 @@ export default class ConsoleLogCapture {
       }
     }
   }
-
   /**
    * @param fileName - The name of the file to save the logs to. Defaults to `.console.log`.
    * Starts capturing logs.
@@ -36,20 +35,57 @@ export default class ConsoleLogCapture {
     if (!fs.existsSync(this.location + this.fileName)) {
       this.createLogFile();
     } else {
-      fs.appendFileSync(this.location + this.fileName, logText + '\n');
+      const timeFormat = new Date();
+      const time = timeFormat.getFullYear() + '-' + (timeFormat.getMonth() + 1) + '-' + timeFormat.getDate() + '_' + timeFormat.getHours() + ':' + timeFormat.getMinutes();
+
+      fs.appendFileSync(this.location + this.fileName, time + ' ' + logText + '\n');
     }
+  }
+  private readLogFile(): string[] {
+    if (!fs.existsSync(this.location + this.fileName)) {
+      this.createLogFile();
+      return [];
+    }
+    const data = fs.readFileSync(this.location + this.fileName, 'utf8');
+    return data.split('\n');
   }
   private createLogFile(): void {
     if (!fs.existsSync(this.location + this.fileName)) {
       fs.writeFile(this.location + this.fileName, '', (err: any) => {
         if (err) throw err;
       });
+    } else {
+      return;
+    }
+  }
+  private getLogsFromFile(startTime?: string, endTime?: string): string[] {
+    try {
+      const logs = this.readLogFile();
+      if (startTime && endTime) {
+        return logs.filter(log => {
+          const logTime = this.getLogTime(log);
+          return logTime >= startTime && logTime <= endTime;
+        }).map(log => log.split(' ').slice(1).join(' '));
+      } else if (startTime) {
+        return logs.filter(log => {
+          const logTime = this.getLogTime(log);
+          return logTime >= startTime;
+        }).map(log => log.split(' ').slice(1).join(' '));
+      } else if (endTime) {
+        return logs.filter(log => {
+          const logTime = this.getLogTime(log);
+          return logTime <= endTime;
+        }).map(log => log.split(' ').slice(1).join(' '));
+      } else {
+        return logs.map(log => log.split(' ').slice(1).join(' '));
+      }
+    } catch (error) {
+      return [];
     }
   }
 
-  private getLogsFromFile(): string[] {
-    const data = fs.readFileSync(this.location + this.fileName, 'utf8');
-    return data.split('\n');
+  private getLogTime(log: string): string {
+    return log.split(' ')[0];
   }
 
   private deleteLogFile(): void {
@@ -72,11 +108,8 @@ export default class ConsoleLogCapture {
    * @returns The captured logs as a single string, separated by newlines.
    * 
    */
-  public getCapturedLogs(length?: number): string {
-    if (length) {
-      return this.getLogsFromFile().slice(0, length).join('\n');
-    }
-    return this.getLogsFromFile().join('\n');
+  public getCapturedLogs(startTime?: string, endTime?: string): string {
+    return this.getLogsFromFile(startTime, endTime).join('\n');
   }
   /**
    * @returns The cleared logs as an array of strings.
@@ -84,9 +117,8 @@ export default class ConsoleLogCapture {
   public clear(deleteFile: boolean = false): void {
     if (deleteFile) {
       this.deleteLogFile();
-    } else {
-      this.createLogFile();
     }
+    this.createLogFile();
   }
   /**
    * @returns The number of logs captured.
@@ -107,4 +139,3 @@ export default class ConsoleLogCapture {
     return this.getLogsFromFile()[0];
   }
 }
-
