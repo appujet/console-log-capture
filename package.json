@@ -8,6 +8,14 @@
     "build": "tsc",
     "prepublishOnly": "npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brblacky/console-log-capture.git"
+  },
+  "bugs": {
+    "url": "https://github.com/brblacky/console-log-capture/issues"
+  },
+  "homepage": "https://github.com/brblacky/console-log-capture#readme",
   "author": "blacky",
   "license": "MIT",
   "devDependencies": {
